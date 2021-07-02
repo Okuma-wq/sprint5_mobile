@@ -1,0 +1,58 @@
+CREATE DATABASE Roman;
+
+Use Roman;
+
+CREATE TABLE TipoUsuario
+(
+	idTipo	INT PRIMARY KEY IDENTITY
+	,Tipo	VARCHAR(200) NOT NULL UNIQUE
+);
+GO
+
+CREATE TABLE Usuario
+(
+	idUsuario	INT PRIMARY KEY IDENTITY
+	,idTipo		INT FOREIGN KEY REFERENCES TipoUsuario(idTipo)
+	,Email	VARCHAR(200) NOT NULL UNIQUE
+	,Senha	VARCHAR(200) NOT NULL
+);
+GO
+
+CREATE TABLE Equipe
+(
+	idEquipe INT PRIMARY KEY IDENTITY
+	,Equipe VARCHAR(200) NOT NULL
+);
+GO
+
+CREATE TABLE Professor
+(
+	idProfessor	INT PRIMARY KEY IDENTITY
+	,idUsuario	INT FOREIGN KEY REFERENCES Usuario(idUsuario)
+	,idEquipe	INT FOREIGN KEY REFERENCES Equipe(idEquipe)
+	,Nome		VARCHAR(200) NOT NULL
+);
+GO
+
+CREATE TABLE Projeto
+(
+	idProjeto		INT PRIMARY KEY IDENTITY
+	,idProfessor	INT FOREIGN KEY REFERENCES Professor(idProfessor)
+	,Projeto		VARCHAR(200) NOT NULL
+);
+GO
+
+CREATE TABLE Tema
+(
+	idTema	INT PRIMARY KEY IDENTITY
+	,Tema	VARCHAR(200) NOT NULL
+);
+GO
+
+CREATE TABLE ProjetoTema
+(
+	idProjetoTema	INT PRIMARY KEY IDENTITY
+	,idProjeto		INT FOREIGN KEY REFERENCES Projeto(idProjeto)
+	,idTema			INT FOREIGN KEY REFERENCES Tema(idTema)
+);
+GO
